@@ -11,19 +11,31 @@ RUN \
   apt-get install software-properties-common -y && \
   apt-get update -y && \
   apt-get install -y openjdk-8-jdk \
-                git \
-                build-essential \
-				subversion \
-				perl \
-				curl \
-				unzip \
-				cpanminus \
-				make \
-                && \
+  git \
+  build-essential \
+  subversion \
+  perl \
+  curl \
+  unzip \
+  cpanminus \
+  make \
+  bc \
+  && \
   rm -rf /var/lib/apt/lists/*
 
+RUN ARCH=$(uname -m) && \
+  if [ "$ARCH" = "amd64" ] || [ "$ARCH" = "x86_64" ]; then \
+  export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-x86_64; \
+  elif [ "$ARCH" = "arm64" ] || [ "$ARCH" = "aarch64" ]; then \
+  export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-arm64; \
+  else \
+  echo "Unsupported architecture: $ARCH"; \
+  exit 1; \
+  fi && \
+  echo "JAVA_HOME is set to $JAVA_HOME"
+
 # Java version
-ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
+ENV JAVA_HOME $JAVA_HOME
 
 # Timezone
 ENV TZ=America/Los_Angeles
