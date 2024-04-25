@@ -25,7 +25,7 @@ RUN \
 
 RUN ARCH=$(uname -m) && \
   if [ "$ARCH" = "amd64" ] || [ "$ARCH" = "x86_64" ]; then \
-  export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-x86_64; \
+  export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64; \
   elif [ "$ARCH" = "arm64" ] || [ "$ARCH" = "aarch64" ]; then \
   export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-arm64; \
   else \
